@@ -5,15 +5,13 @@
 	version     = "0.0.1"
  <name>nk12</name>
 
-<description>
-Простое приложение для отправки протоколов на сервер
-</description>
+<description>Простое приложение для отправки протоколов на сервер КАРИК (nk12.su)</description>
 
-<icon src="res/drawable-ldpi/hypnotoad.png" gap:role="default" />
+<icon src="res/drawable-ldpi/karik_logo.png" gap:role="default" ></icon>
 
-<icon src="res/drawable-ldpi/hypnotoad.png" width="36" height="36"/>
-<icon src="res/drawable-ldpi/hypnotoad.png" width="48" height="48"/>
-<icon src="res/drawable-ldpi/hypnotoad.png" width="72" height="72"/>
+<icon src="res/drawable-ldpi/karik_logo.png" width="36" height="36"/>
+<icon src="res/drawable-ldpi/karik_logo.png" width="48" height="48"/>
+<icon src="res/drawable-ldpi/karik_logo.png" width="72" height="72"/>
 
 <preference name="prerendered-icon" value="true" />
 

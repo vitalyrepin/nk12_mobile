@@ -35,9 +35,7 @@
  	 	sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
  	 	allowEdit : true,
   		encodingType: Camera.EncodingType.JPEG,
-  		destinationType: navigator.camera.DestinationType.FILE_URI,
-  		targetWidth: 100,
-  		targetHeight: 100 });
+  		destinationType: navigator.camera.DestinationType.FILE_URI});
    	}
 
   	function openCamera() {
@@ -74,7 +72,7 @@
   		img.width = 100;
   		img.height = 100;
   		img.border = "2";
-  		img.alt = "Не возможно загрузить изображение";
+  		img.alt = "Невозможно загрузить изображение";
   		img.onclick = function() { removeImage(this); }; 
 		mainBodyPart.appendChild(img);
   	}
@@ -92,12 +90,12 @@
   			button.removeAttribute("disabled");
   		}
    	}
-  
+
   	function onFailed(message) {
   		var image = document.getElementById("cameraImage");
   		image.alt="Can't get the message, error: " + message;  	
   	}
-  	
+
   	function sendPicture() {
 		sessionStorage.setItem("imagesCount", 0);
   		if(typeof(Storage)!=="undefined")
@@ -114,10 +112,10 @@
   			//TODO: argh, browser doesn't support the Web Storage in HTML5;
   			//We need to handle it somehow.
   		}
-  	
+
 	 	window.location.assign("sendForm.html");
    	}
-   	
+
   </script>
  </body>
 </html>

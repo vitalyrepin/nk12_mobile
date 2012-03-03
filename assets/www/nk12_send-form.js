@@ -5,9 +5,6 @@ function onPageLoaded()
  
  str = localStorage.getItem("password");
  document.form.password.value = str;
-
- str = localStorage.getItem("uik");
- document.form.uik.value = str;
 }
   	
 function onSubmitClicked()
@@ -20,9 +17,7 @@ function onSubmitClicked()
   	 
  localStorage.setItem("email", document.form.emailAddress.value);
  localStorage.setItem("password", document.form.password.value);
- localStorage.setItem("uik", document.form.uik.value);
   	 
-
  if (sessionStorage.getItem("imagesCount") !== null) {
 	for (var i = 0; i < sessionStorage.imagesCount; i++) {
 		sessionStorage.uploadedFilesCount = i;
@@ -33,12 +28,8 @@ function onSubmitClicked()
        }	
 }
   	
-function uploadFile(imgSrc) { // test URI = http://borki67km.ru/67/tst_upload.php
-	/*var http = new XMLHttpRequest();
-	http.open("POST", "http://borki67km.ru/67/tst_upload.php", true);
-	http.setRequestHeader("login", localStorage.getItem("email"));
-	http.setRequestHeader("password", localStorage.getItem("password"));
-	http.send(null);*/
+function uploadFile(imgSrc) { 
+
 var uploadSuccess = function(response) {
 	if (sessionStorage.getItem("uploadedFilesCount") !== null) {
 		if (sessionStorage.uploadedFilesCount === sessionStorage.imagesCount) {
@@ -56,7 +47,7 @@ var uploadFailed = function(error) {
  var options = new FileUploadOptions();
  var src = new String(imgSrc);
  options.fileKey="file";
- options.fileName="UIK_" + localStorage.getItem("uik") + "_picture_" + sessionStorage.uploadedFilesCount + ".jpg";
+ options.fileName="PHONEGAP"  + "_picture_" + sessionStorage.uploadedFilesCount + ".jpg";
  options.mimeType="image/jpeg";
  options.chunkedMode = false;
 
@@ -67,7 +58,5 @@ var uploadFailed = function(error) {
  options.params = params;
 
  var transfer = new FileTransfer();
- transfer.upload(imgSrc, "http://borki67km.ru/67/tst_upload.php?login=" + localStorage.getItem("email") + "&password=" + localStorage.getItem("password"), uploadSuccess, uploadFailed, options);  
-	
+ transfer.upload(imgSrc, "http://borki67km.ru/67/tst_upload.php?login=" + localStorage.getItem("email") + "&password=" + localStorage.getItem("password"), uploadSuccess, uploadFailed, options);  	
 } 
-
