@@ -17,10 +17,13 @@ function onSubmitClicked()
   	 
  localStorage.setItem("email", document.form.emailAddress.value);
  localStorage.setItem("password", document.form.password.value);
-  	 
+
+ alert("Внимание: начинаем процесс загрузки протокола (" + sessionStorage.getItem("imagesCount") + " страниц) на сервер КАРИК. Нажмите OK для продолжения.");
+
+ sessionStorage.uploadedFilesCount = 0;
+ 
  if (sessionStorage.getItem("imagesCount") !== null) {
 	for (var i = 0; i < sessionStorage.imagesCount; i++) {
-		sessionStorage.uploadedFilesCount = i;
 		uploadFile(sessionStorage.getItem("picture" + i));
 	}
 } else {
@@ -30,10 +33,29 @@ function onSubmitClicked()
   	
 function uploadFile(imgSrc) { 
 
-var uploadSuccess = function(response) {
+var uploadSuccess = function(r) {
+    sessionStorage.uploadedFilesCount++;
+
+    var msg = new String("Произошла ошибка: ");
+    var showErr = false;
+
+    if(r.responseCode == 403) { // Authentication failed
+        msg += "Неверный адрес электропочты или пароль. Протоколы НЕ загружены на сервер nk12.su.";
+        showErr = true;
+    } else if (r.responseCode == 404) { // Не найден УИК
+        msg += "Вы не привязаны ни к одному УИК в качестве наблюдателя в системе nk12.su. Протоколы ЗАГРУЖЕНЫ на сервер.";
+        showErr = true;
+    } else if (r.responseCode != 200) {
+        msg += "Неизвестная, код: " + error.code;
+        showErr = true;
+    };
+    if(showErr === true) {
+        alert(msg);
+    };
+
 	if (sessionStorage.getItem("uploadedFilesCount") !== null) {
 		if (sessionStorage.uploadedFilesCount === sessionStorage.imagesCount) {
-			alert("Файлы успешно загружены:" + response.response);
+			alert("Протокол (" + sessionStorage.uploadedFilesCount + " страниц) успешно загружен на сервер КАРИК (nk12.su):" + response.response);
 			return;
 		}
 		return;
@@ -41,7 +63,7 @@ var uploadSuccess = function(response) {
 }
 
 var uploadFailed = function(error) {
-	alert("Произошла ошибка: " + error.code);
+    alert("Произошла ошибка доступа/отправки страниц протокола: " + error.msg);
 }
 
  var options = new FileUploadOptions();
@@ -58,5 +80,5 @@ var uploadFailed = function(error) {
  options.params = params;
 
  var transfer = new FileTransfer();
- transfer.upload(imgSrc, "http://borki67km.ru/67/tst_upload.php?login=" + localStorage.getItem("email") + "&password=" + localStorage.getItem("password"), uploadSuccess, uploadFailed, options);  	
+ transfer.upload(imgSrc, "http://test.nk12.su/pictures?login=" + localStorage.getItem("email") + "&password=" + localStorage.getItem("password"), uploadSuccess, uploadFailed, options);  	
 } 

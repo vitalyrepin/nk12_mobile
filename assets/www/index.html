@@ -100,11 +100,11 @@
 		sessionStorage.setItem("imagesCount", 0);
   		if(typeof(Storage)!=="undefined")
   		{
-   			var allImages = document.getElementsByTagName("img")
+   			var allImages = document.getElementsByTagName("img");
+            sessionStorage.imagesCount = allImages.length;
    			for (var i = 0; i < allImages.length; i++)
    			{
    				sessionStorage.setItem("picture"+i, allImages[i].src);
-   				sessionStorage.imagesCount = sessionStorage.imagesCount + 1;
    			}
   		}
 		else
