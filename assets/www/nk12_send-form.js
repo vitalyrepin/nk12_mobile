@@ -7,7 +7,7 @@ function onPageLoaded()
  document.form.password.value = str;
 }
   	
-function onSubmitClicked()
+function onSendClicked()
 {
  if (document.form.emailAddress.value === "" ||
  document.form.password.value === "") {
@@ -36,14 +36,14 @@ function uploadFile(imgSrc) {
 var uploadSuccess = function(r) {
     sessionStorage.uploadedFilesCount++;
 
-    var msg = new String("Произошла ошибка: ");
+    var msg = new String("Произошла ошибка при загрузке страницы " + sessionStorage.uploadedFilesCount + " протокола: ");
     var showErr = false;
 
-    if(r.responseCode == 403) { // Authentication failed
-        msg += "Неверный адрес электропочты или пароль. Протоколы НЕ загружены на сервер nk12.su.";
+    if(r.responseCode == 207) { // Authentication failed
+        msg += "Неверный адрес электропочты или пароль. Страница не загружена на сервер nk12.su.";
         showErr = true;
-    } else if (r.responseCode == 404) { // Не найден УИК
-        msg += "Вы не привязаны ни к одному УИК в качестве наблюдателя в системе nk12.su. Протоколы ЗАГРУЖЕНЫ на сервер.";
+    } else if (r.responseCode == 208) { // Не найден УИК
+        msg += "Вы не привязаны ни к одному УИК в качестве наблюдателя в системе nk12.su. Страница ЗАГРУЖЕНА на сервер.";
         showErr = true;
     } else if (r.responseCode != 200) {
         msg += "Неизвестная, код: " + error.code;
@@ -51,7 +51,9 @@ var uploadSuccess = function(r) {
     };
     if(showErr === true) {
         alert(msg);
-    };
+    } else {
+        alert("Страница " + sessionStorage.uploadedFilesCount + " протокола загружена успешно на сервер КАРИК.")
+    } 
 
 	if (sessionStorage.getItem("uploadedFilesCount") !== null) {
 		if (sessionStorage.uploadedFilesCount === sessionStorage.imagesCount) {
@@ -63,7 +65,7 @@ var uploadSuccess = function(r) {
 }
 
 var uploadFailed = function(error) {
-    alert("Произошла ошибка доступа/отправки страниц протокола: " + error.msg);
+    alert("Произошла ошибка доступа/отправки страниц протокола: " + error.code + ". Вероятнее всего данные не загружены на сервер!");
 }
 
  var options = new FileUploadOptions();
@@ -80,5 +82,5 @@ var uploadFailed = function(error) {
  options.params = params;
 
  var transfer = new FileTransfer();
- transfer.upload(imgSrc, "http://test.nk12.su/pictures?login=" + localStorage.getItem("email") + "&password=" + localStorage.getItem("password"), uploadSuccess, uploadFailed, options);  	
+ transfer.upload(imgSrc, "http://nk12.su/pictures?login=" + localStorage.getItem("email") + "&password=" + localStorage.getItem("password"), uploadSuccess, uploadFailed, options);  	
 } 

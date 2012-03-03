@@ -7,11 +7,12 @@
    <script type="text/javascript" charset="utf-8" src="nk12_send-form.js"></script>
  </head>
  <body onLoad="onPageLoaded()">
+
   <h3>Заполните форму</h3>
-  <form id="sendForm" name="form" method="post">
+  <form id="sendForm" name="form" method="post" onsubmit="return false">
 	E-Mail: <input type="email" name="emailAddress" value="" /><br />
 	Пароль:<input type="password" name="password" value="" /><br />
-	<input type="submit" value="Отправить" onclick="onSubmitClicked()" />
+	<input type="button" value="Отправить" onclick="onSendClicked()" />
   </form>
  </body>
 </html>
